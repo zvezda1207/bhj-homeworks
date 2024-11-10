@@ -2,30 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.getElementById("task__input");
     const taskForm = document.getElementById("tasks__form");
     const taskList = document.getElementById("tasks__list");
+    
+    const addTask = (title) => {
+        taskList.insertAdjacentHTML('afterbegin', `
+            <div class="task">
+            <div class="task__title">
+            ${title}
+            </div>
+            <a href="#" class="task__remove">&times;</a>
+            </div>
+            `);
 
-    while (taskList.firstChild) {
-        taskList.removeChild(taskList.firstChild);
-    }
-
-    const addTask = (text) => {
-        const task = document.createElement("div");
-        task.classList.add("task");
-
-        const taskTitle = document.createElement("div");
-        taskTitle.classList.add("task__title");
-        taskTitle.textContent = text;
-
-        const taskRemove = document.createElement("a");
-        taskRemove.classList.add("task__remove");
-        taskRemove.innerHTML = "&times;";
-        taskRemove.addEventListener("click", () => {
-        task.remove();
-        });
-
-        task.appendChild(taskTitle);
-        task.appendChild(taskRemove);
-        taskList.appendChild(task);
-    };
+            const taskRemove = document.querySelector(".task__remove");
+            taskRemove.addEventListener("click", (event) => {
+                event.preventDefault();
+                taskRemove.closest(".task").remove();
+            });   
+        };
 
     taskForm.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -37,17 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             taskInput.value = "";
         }
     });
-
-    taskInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-
-            const taskText = taskInput.value.trim();
-
-            if (taskText) {
-                addTask(taskText);
-                taskInput.value = "";
-            }
-        }
-    });
 }); 
+
+
+
