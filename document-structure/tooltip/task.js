@@ -1,10 +1,16 @@
-const tooltipTextActive = null;
+let tooltipTextActive = null;
 
 document.querySelectorAll(".has-tooltip").forEach(element => {
     element.addEventListener("click", function(event) {
         event.preventDefault();
 
-        const tooltip = document.querySelector(".tooltip");
+        let tooltip = document.querySelector(".tooltip");
+
+        if (!tooltip) {
+            tooltip = document.createElement("div");
+            tooltip.className = "tooltip";
+            document.body.appendChild(tooltip);
+        }
         const tooltipText = this.getAttribute("title");
 
         if (tooltipTextActive === tooltipText) {
@@ -27,8 +33,6 @@ document.addEventListener("click", function(event) {
         tooltip.classList.remove("tooltip_active");
     }
 });
-
-
 
 
 
