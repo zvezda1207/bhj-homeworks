@@ -1,11 +1,20 @@
+const tooltipTextActive = null;
+
 document.querySelectorAll(".has-tooltip").forEach(element => {
     element.addEventListener("click", function(event) {
         event.preventDefault();
 
         const tooltip = document.querySelector(".tooltip");
-        tooltip.textContent = this.getAttribute("title");
-        tooltip.classList.add("tooltip_active");          
+        const tooltipText = this.getAttribute("title");
 
+        if (tooltipTextActive === tooltipText) {
+            tooltip.classList.toggle("tooltip_active"); 
+            return; 
+        }
+
+        tooltip.textContent = tooltipText;
+        tooltip.classList.add("tooltip_active");
+        
         const rect = this.getBoundingClientRect();
         tooltip.style.left = `${rect.left}px`;
         tooltip.style.top = `${rect.bottom}px`;
@@ -18,3 +27,8 @@ document.addEventListener("click", function(event) {
         tooltip.classList.remove("tooltip_active");
     }
 });
+
+
+
+
+
